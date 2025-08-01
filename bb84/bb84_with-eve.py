@@ -47,7 +47,7 @@ alice_key = [alice_bits[i] for i in sifted_key_indices]
 bob_key = [bob_bits[i] for i in sifted_key_indices]
 
 # Estimate error rate (Eve's interference)
-sample_size = min(20, len(alice_key) // 2)  # Check 20 bits or half the key
+sample_size = min(1000, len(alice_key) // 2)  # Check 20 bits or half the key
 sample_indices = random.sample(range(len(alice_key)), sample_size)
 
 errors = 0
@@ -62,7 +62,7 @@ print(f"Tested {sample_size} bits - Found {errors} errors")
 print(f"Estimated error rate: {error_rate:.2%}")
 
 # Security threshold (25% is theoretical maximum for BB84 with Eve)
-if error_rate > 0.0001:
+if error_rate > 0.1:
     print("Eve detected! Aborting key exchange.")
 else:
     # Remove tested bits from final key
