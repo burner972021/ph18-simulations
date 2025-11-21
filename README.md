@@ -1,15 +1,12 @@
 # ph18-simulations
 
-CV-QKD and various other protocols' simulations/data analysis/etc. For CenTaD PH18
+Ekert-91 and various other protocols' simulations/data analysis/etc. For CenTaD PH18
 
 ## Yet another QKD simulation in Python
 
-### 1. Research hypothesis
+### 1. Research Scope
 
-We hypothesise that continuous-variable quantum key distribution (CV-QKD) systems, which rely on coherent states and Gaussian modulation of light beams rather than discrete photons, may be vulnerable to beam-splitting attacks in the presence of realistic detector imperfections. 
-
-
-While existing studies often assume ideal homodyne or heterodyne detectors, practical implementations may suffer from efficiency mismatches, excess noise, or bandwidth limitations. These imperfections could obscure the signatures of certain attacks, allowing an adversary to mount successful eavesdropping strategies that would otherwise be detectable. Our research aims to model and analyze how such detector flaws affect the detectability of beam-splitting-based attacks and to assess the resulting impact on the security of CV-QKD protocols.
+Most work done on current discrete-variable quantum key distribution variables assume datasets that approach infinity. However, that is not practical in real life settings. We would like to investigate the effects of a finite-sized dataset, as well as the effects of an eavesdropper on this data, We would like to find the acceptable range of measured Bell's inequality values calculated from finite data sets, and how they deviate from the assumed ideal values.
 
 ## 2. so what's in here?
 
