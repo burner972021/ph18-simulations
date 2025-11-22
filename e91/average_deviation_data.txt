@@ -1,0 +1,46 @@
+average_deviation.png
+
+N=1000  avg S=2.8321  deviation=0.0037
+N=1438  avg S=2.8298  deviation=0.0014
+N=2069  avg S=2.8412  deviation=0.0128
+N=2976  avg S=2.8120  deviation=0.0164
+N=4281  avg S=2.8199  deviation=0.0085
+N=6158  avg S=2.8411  deviation=0.0127
+N=8858  avg S=2.8232  deviation=0.0052
+N=12742  avg S=2.8337  deviation=0.0053
+N=18329  avg S=2.8272  deviation=0.0012
+N=26366  avg S=2.8304  deviation=0.0020
+N=37926  avg S=2.8297  deviation=0.0013
+N=54555  avg S=2.8310  deviation=0.0025
+N=78475  avg S=2.8258  deviation=0.0026
+N=112883  avg S=2.8266  deviation=0.0018
+N=162377  avg S=2.8262  deviation=0.0023
+N=233572  avg S=2.8287  deviation=0.0003
+N=335981  avg S=2.8297  deviation=0.0013
+N=483293  avg S=2.8285  deviation=0.0000
+N=695192  avg S=2.8290  deviation=0.0005
+N=1000000  avg S=2.8284  deviation=0.0000
+
+
+average_deviation_2.png
+
+N=1000  avg S=2.8176  deviation=0.0108
+N=1438  avg S=2.8407  deviation=0.0123
+N=2069  avg S=2.8344  deviation=0.0060
+N=2976  avg S=2.8199  deviation=0.0085
+N=4281  avg S=2.8329  deviation=0.0045
+N=6158  avg S=2.8218  deviation=0.0066
+N=8858  avg S=2.8344  deviation=0.0060
+N=12742  avg S=2.8217  deviation=0.0068
+N=18329  avg S=2.8424  deviation=0.0139
+N=26366  avg S=2.8330  deviation=0.0046
+N=37926  avg S=2.8264  deviation=0.0020
+N=54555  avg S=2.8322  deviation=0.0038
+N=78475  avg S=2.8310  deviation=0.0026
+N=112883  avg S=2.8319  deviation=0.0035
+N=162377  avg S=2.8283  deviation=0.0001
+N=233572  avg S=2.8283  deviation=0.0002
+N=335981  avg S=2.8292  deviation=0.0008
+N=483293  avg S=2.8278  deviation=0.0006
+N=695192  avg S=2.8292  deviation=0.0007
+N=1000000  avg S=2.8281  deviation=0.0003
