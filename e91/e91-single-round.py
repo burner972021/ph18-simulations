@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt 
 import numpy as np 
 import random
 
@@ -33,7 +32,7 @@ for _ in range(10000):
     rb = bob_angles[b]  
 
     if ra == rb:
-        key += str(np.round(random.random()))
+        key += str(np.round(random.random(), 0))[0]
     else:
         diff = np.radians(abs(ra - rb))
 
@@ -80,3 +79,5 @@ print(f'P(ncc) = {counts[3][2]}')
 print(f'P(ncnc) = {counts[3][3]}')
 
 print(f'\nS Value = {s}')
+
+print(f'\nKey = {key}')
