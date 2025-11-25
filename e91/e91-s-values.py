@@ -29,7 +29,7 @@ s_values = []
 for rounds in round_list:
 
     counts = new_counts()
-    key = ""
+    key = ''
 
     for _ in range(rounds):
         a = random.randint(0, 2)
