@@ -81,6 +81,7 @@ for j, phi in enumerate(phis):
         psi_t = U @ psi0
         pop_02[i, j] = np.abs(psi_t[1])**2
 
+
 # ---------------------------
 # (c) Conditional phase accumulation at a chosen operating flux
 # We compute the phase picked up by the amplitude on |11> relative to the bare |11> dynamical phase
@@ -173,7 +174,7 @@ ax.set_title('(c) Conditional phase & CZ-fidelity proxy at operating flux')
 ax.set_xlim(times[0], times[-1])
 ax.set_ylim(0.0, np.max(unwrapped_phase)*1.1)
 ax2.set_ylim(0.0, 1.05)
-
+    
 # Legends (combine)
 lines, labels = ax.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
