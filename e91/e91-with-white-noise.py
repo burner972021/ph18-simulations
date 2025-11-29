@@ -1,75 +1,82 @@
-import numpy as np 
-import random
+import numpy as np
+import matplotlib.pyplot as plt
 
-runs = 100
-rounds = 10000
-eta = np.linspace(0, 2*np.pi, 100)
+runs = 10        
+rounds = 10000   
+etas = np.linspace(0, 2*np.pi, 100)
+ideal_S = 2*np.sqrt(2)
 
-alice_angles = [0.0, 45.0, 22.5]
-bob_angles = [0.0, -22.5, 22.5]
+alice_angles_deg = np.array([0.0, 22.5, 45.0]) 
+alice_rad = np.radians(alice_angles_deg)
 
-a1b3 = [0] * 4
-a1b2 = [0] * 4
-a2b3 = [0] * 4
-a2b2 = [0] * 4
+bob_angles_deg = np.array([0.0, 22.5, -22.5]) 
+bob_rad = np.radians(bob_angles_deg)
 
-counts = [a1b3, a1b2, a2b3, a2b2] 
-store = {'02': 0, '01': 1, '12': 2, '11': 3}
-s_values = []
+store = {'01': 0, '02': 1, '21': 2, '22': 3}
 
-def calc_probabilities(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr):
-    if r < p_cc:
-        arr[store[i]][0] += 1
-    elif r < p_cc + p_cnc:
-        arr[store[i]][1] += 1
-    elif r < p_cc + p_cnc + p_ncc:
-        arr[store[i]][2] += 1
-    else:
-        arr[store[i]][3] += 1
-    return arr
+def compute_S_vectorised(eta):
+    a = np.random.randint(0, 3, rounds)
+    b = np.random.randint(0, 3, rounds)
 
+    ra = alice_rad[a]
+    rb = bob_rad[b]
 
-for _1 in range(runs):
-    new_counts = counts
-    key = ''
-    for _2 in range(rounds):
-        a = random.randint(0, 2)
-        b = random.randint(0, 2)
-        ra = np.radians(alice_angles[a])
-        rb = np.radians(bob_angles[b])
+    pair_keys = [f"{a[i]}{b[i]}" for i in range(rounds)]
+    pair_idx = np.array([store.get(key, -1) for key in pair_keys])
 
-        if ra == rb:
-            key += str(np.round(random.random()))[0]
-        else:
-            diff = np.radians(abs(ra - rb))
-            p_cc = ((np.cos(eta) * np.cos(ra) * np.cos(rb)) + (np.sin(eta) * np.sin(ra) * np.cos(rb))) ** 2
-            p_cnc = ((-np.cos(eta) * np.cos(ra) * np.sin(rb)) + (np.sin(eta) * np.sin(ra) * np.cos(rb))) ** 2
-            p_ncc = ((-np.cos(eta) * np.sin(ra) * np.cos(rb)) + (np.sin(eta) * np.cos(ra) * np.sin(rb))) ** 2
-            p_ncnc = ((np.cos(eta) * np.sin(ra) * np.sin(rb)) + (np.sin(eta) * np.cos(ra) * np.cos(rb))) ** 2
+    p_cc = (np.cos(eta)*np.cos(ra)*np.cos(rb) + np.sin(eta)*np.sin(ra)*np.sin(rb))**2
+    p_cnc = (-np.cos(eta)*np.cos(ra)*np.sin(rb) + np.sin(eta)*np.sin(ra)*np.cos(rb))**2
+    p_ncc = (-np.cos(eta)*np.sin(ra)*np.cos(rb) + np.sin(eta)*np.cos(ra)*np.sin(rb))**2
+    p_ncnc = (np.cos(eta)*np.sin(ra)*np.sin(rb) + np.sin(eta)*np.cos(ra)*np.cos(rb))**2
 
-            r = random.random()
-            i = str(a + b)
-            if i in store:
-                calc_probabilities(r, i, p_cc, p_cnc, p_ncc, p_ncnc, new_counts)
+    r = np.random.random(rounds)
+    outcome = np.zeros(rounds, dtype=int)
+    outcome[r >= p_cc] = 1
+    outcome[r >= p_cc + p_cnc] = 2
+    outcome[r >= p_cc + p_cnc + p_ncc] = 3
 
-    e13 = (counts[0][0]+counts[0][3]-counts[0][1]-counts[0][2]) / sum(counts[0])
-    e12 = (counts[1][0]+counts[1][3]-counts[1][1]-counts[1][2]) / sum(counts[1])
-    e23 = (counts[2][0]+counts[2][3]-counts[2][1]-counts[2][2]) / sum(counts[2])
-    e22 = (counts[3][0]+counts[3][3]-counts[3][1]-counts[3][2]) / sum(counts[3])
+    counts = np.zeros((4, 4), dtype=int)
+    for idx in range(4):
+        mask = pair_idx == idx
+        if np.any(mask):
+            vals, freq = np.unique(outcome[mask], return_counts=True)
+            for v, f in zip(vals, freq):
+                counts[idx, v] = f
 
-    S = e13 + e12 + e23 - e22
-    s_values.append(S)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        E = (counts[:,0] + counts[:,3] - counts[:,1] - counts[:,2]) / counts.sum(axis=1)
 
-x = eta
-y1 = np.array(s_values)
-fig, axs = plt.subplot('left', 'right')
-axs['left'].scatter(x, y2)
+    E[np.isnan(E)] = 0
 
-ideal = np.array([2*np.sqrt(2)] * 100)
-axs['left'].plot(x, ideal, label='ideal', color='red')
-plt.legend()
+    e13, e12, e23, e22 = E
+    return e13 + e12 + e23 - e22
 
-axs['left'].set_xlabel(r'eta ($\eta$)')
-axs['left'].set_ylabel('average calculated S value')
+S_values = np.array([compute_S_vectorised(eta) for eta in etas])
 
+deviations = []
+for eta in etas:
+    S_many = np.array([compute_S_vectorised(eta) for _ in range(runs)])
+    deviations.append(np.abs(S_many.mean() - ideal_S))
+
+deviations = np.array(deviations)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+axes[0].plot(etas, S_values, marker='o', linestyle='None')
+axes[0].plot(etas, np.full_like(etas, ideal_S), label='Ideal S, 2√2', color='red')
+axes[0].set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi])
+axes[0].set_xticklabels(['0', '½π', 'π', '3/2π', '2π'])
+axes[0].set_title("Single-run S value vs η")
+axes[0].set_xlabel("η")
+axes[0].set_ylabel("S value")
+axes[0].legend(loc='lower left')
+
+axes[1].plot(etas, deviations)
+axes[1].set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi])
+axes[1].set_xticklabels(['0', '1/2π', 'π', '3/2π', '2π'])
+axes[1].set_title("Average deviation from ideal vs η")
+axes[1].set_xlabel("η")
+axes[1].set_ylabel("$|\\langle S \\rangle - 2\\sqrt{2}|$")
+
+plt.tight_layout()
 plt.show()

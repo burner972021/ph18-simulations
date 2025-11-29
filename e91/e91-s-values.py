@@ -21,14 +21,11 @@ def calc_probabilities(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr):
     else:
         arr[store[i]][3] += 1
 
-def new_counts():
-    return [[0]*4 for _ in range(4)]
-
 s_values = []
 
 for rounds in round_list:
 
-    counts = new_counts()
+    counts = [[0]*4 for _ in range(4)]
     key = ''
 
     for _ in range(rounds):
