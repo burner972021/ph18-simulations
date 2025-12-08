@@ -31,7 +31,7 @@ g = 0.020              # GHz, bare coupling between modes
 g_eff = np.sqrt(2.0) * g
 
 # Flux sweep for qubit 1 (in units of Phi0)
-phis = np.linspace(0.0, 0.35, 351)
+phis = np.linspace(0.0, 0.40, 351)
 
 # Flux-to-frequency model for qubit 1 (simple cosine-root model - captures tunability)
 def omega1_of_phi(phi):
@@ -67,7 +67,7 @@ for i, phi in enumerate(phis):
 # For each phi and time, start in |11> = [1,0] (block basis) and compute P(|02>)
 # ---------------------------
 # choose times (ns) up to a few hundred ns depending on gap
-t_max = 200.0  # ns
+t_max = 35.0  # ns
 nt = 400
 times = np.linspace(0.0, t_max, nt)
 
@@ -89,7 +89,7 @@ for j, phi in enumerate(phis):
 # Then compute a fidelity proxy: F = (1 + cos(phi_cond - pi))/2  which equals 1 when phi_cond==pi
 # ---------------------------
 # choose operating flux near the avoided crossing (where the gap is visible)
-phi_operating = 0.20
+phi_operating = 0.176
 H_op = H_block(phi_operating)
 
 unwrapped_phase = np.zeros_like(times)
@@ -130,7 +130,7 @@ print(f"Estimated CZ gate time (phi_cond ~ pi) at operating flux {phi_operating:
 # ---------------------------
 # Plotting: produce a 1x3 figure to match the paper layout
 # ---------------------------
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+fig, axes = plt.subplots(1, 2, figsize=(18, 5))
 
 # (a) Spectrum
 ax = axes[0]
@@ -159,26 +159,9 @@ ax.set_title('(b) Population in |02> starting from |11> (swap probability)')
 ax.axvline(phi_operating, color='w', ls='--')
 fig.colorbar(im, ax=ax, label='P(|02>)')
 
-# (c) Conditional phase and fidelity at operating flux
-ax = axes[2]
-ax2 = ax.twinx()
-ax.plot(times, unwrapped_phase, color='#1f77b4', lw=1.5, label='Unwrapped conditional phase')
-ax2.plot(times, fidelity_proxy, color='#2ca02c', lw=1.5, ls='--', label='Fidelity proxy')
-ax.axvline(t_CZ, color='red', ls='--', label='Estimated t_CZ')
-ax.axhline(np.pi, color='gray', ls=':', lw=1)
-
-ax.set_xlabel('Time (ns)')
-ax.set_ylabel('Conditional phase (rad)')
-ax2.set_ylabel('Fidelity proxy')
-ax.set_title('(c) Conditional phase & CZ-fidelity proxy at operating flux')
-ax.set_xlim(times[0], times[-1])
-ax.set_ylim(0.0, np.max(unwrapped_phase)*1.1)
-ax2.set_ylim(0.0, 1.05)
-    
 # Legends (combine)
 lines, labels = ax.get_legend_handles_labels()
-lines2, labels2 = ax2.get_legend_handles_labels()
-ax.legend(lines + lines2, labels + labels2, loc='lower right')
+ax.legend(lines, labels, loc='lower right')
 
 plt.tight_layout()
 plt.show()
