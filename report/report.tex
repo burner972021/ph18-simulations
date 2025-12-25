@@ -1,24 +1,35 @@
-\documentclass{article}
+\documentclass[twocolumn,aps,pra]{revtex4-2}
 \usepackage{graphicx}
 \usepackage[a4paper, margin=1in]{geometry}
-\usepackage{biblatex}
 \usepackage{layout}
-\addbibresource{references.bib}
+\usepackage{amsmath,amssymb}
 
-\title{Finite-Key Security Proofs and Key Rate Analysis of Entanglement-Based Quantum Key Distribution with Alternate Measurement Bases}
-\author{Cao Xizhen$^1$, Kaylen Liew Tong En$^1$, Leong Wei Chan$^1$}
-\date{December 2025}
 
 \begin{document}
 
+\title{Finite-Key Security Proofs and Key Rate Analysis of Entanglement-Based Quantum Key Distribution with Alternate Measurement Bases}
+\author{Cao Xizhen}
+\author{Kaylen Liew Tong En}
+\author{Leong Wei Chan}
+\affiliation{Hwa Chong institution, 661 Bukit Timah Road Singapore}
+
+\date{December 2025}
+
+
+\begin{abstract}
+    Most existing analyses of entanglement-based quantum key distribution protocols are performed in the asymptotic limit of infinite key exchange, producing ideal Bell Inequality parameters. However, these ideal values are often not achievable in practical implementations with finite datasets. 
+    
+    In this work, we present a finite-key analysis of entanglement-based quantum key distribution and derive acceptable thresholds for deviations of the observed CHSH Bell parameters from ideal asymptotic values. Using the Ekert-91(E91) protocol, we investigate the effects of channel noise and varied measurement basis choices through numerical simulations. We show that appropriate selections of measurement bases can provide greater security and improve achievable key rates, even with finite exchanges. These findings can provide practical guidance for the optimisation of entanglement-based systems under realistic conditions.
+\end{abstract}
+
 \maketitle
 
-\section{Abstract}
-
-Most existing analyses of entanglement-based quantum key distribution protocols are performed in the asymptotic limit of infinite key exchange, producing ideal Bell Inequality parameters. However, these ideal values are often not achievable in practical implementations with finite datasets. In this work, we present a finite-key analysis of entanglement-based quantum key distribution and derive acceptable thresholds for deviations of the observed CHSH Bell parameters from ideal asymptotic values. Using the Ekert-91(E91) protocol, we investigate the effects of channel noise and varied measurement basis choices through numerical simulations. We show that appropriate selections of measurement bases can provide greater security and improve achievable key rates, even with finite exchanges. These findings can provide practical guidance for the optimisation of entanglement-based systems under realistic conditions.
-
-
 \section{Introduction}
+
+Quantum Key Distribution(QKD) allows two distant parties, i.e. Alice and Bob, to create a shared secret key, even in the presence of a possible eavesdropper, i.e. Eve, who has the computational power to interfere with or intercept signal transmissions between Alice and Bob. The security of QKD is guaranteed by the fundamental laws of quantum mechanics, rather than assumptions in computational difficulty like in classical cryptography. 
+
+There are broadly two families of QKD protocols, namely prepare-and-measure protocols and entanglement-based protocols. We will be focusing on the latter in this report.
+
 
 \subsection{Review of existing work}
 \subsubsection{Entanglement-based protocols and Bell paramters}
@@ -47,7 +58,8 @@ Most existing analyses of entanglement-based quantum key distribution protocols 
 
 \section{Future work}
 
-\section{References}
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
 
 \section{Appendix}
 

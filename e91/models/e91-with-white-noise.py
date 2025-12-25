@@ -60,9 +60,9 @@ for eta in etas:
 
 deviations = np.array(deviations)
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
-axes[0].plot(etas, S_values, marker='o', linestyle='None')
+axes[0].scatter(etas, S_values, s=18)
 axes[0].plot(etas, np.full_like(etas, ideal_S), label='Ideal S, 2√2', color='red')
 axes[0].set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi])
 axes[0].set_xticklabels(['0', '½π', 'π', '3/2π', '2π'])

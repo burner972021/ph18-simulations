@@ -10,19 +10,14 @@ runs_per_round_size = 50           # independent experiments per N (increase for
 round_sizes = np.logspace(3, 6, 20).astype(int)  # N from 1e3 to 1e6 (20 points)
 p_noise = 0.10                     # depolarizing (white) noise strength (0 = ideal, 1 = fully mixed)
 
-# angles (degrees) matching your earlier code (order matters for store mapping)
 alice_angles = [0.0, 45.0, 22.5]
 bob_angles   = [0.0, -22.5, 22.5]
 
-# mapping of pair keys to CHSH correlator rows (keeps consistency with your earlier code)
 store = {'02': 0, '01': 1, '12': 2, '11': 3}
 
 ideal_S_value = 2.0 * np.sqrt(2)   # ideal maximum
 
-# classical/local-realistic bound
 classical_bound = 2.0
-
-# sigma thresholds to check (kσ)
 k_values = [3, 5, 7, 10]
 
 # -------------------------
