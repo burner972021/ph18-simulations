@@ -1,4 +1,4 @@
-import numpy as np
+import numpy as np 
 import random
 from e91lib import calc_sval, output, update_counts
 
@@ -8,22 +8,26 @@ eta = np.radians(eta_degrees)
 alice_error = 0         # alice's detector error rate
 bob_error = 0       # bob detector error rate
 
-alice_angles = [-22.5, 0.0, 22.5, 45.0]
-bob_angles = [-22.5, 0.0, 22.5, 45.0]
+alice_angles = [0.0, 45.0, 22.5]
+bob_angles = [0.0, -22.5, 22.5]
 key = ''
-keylength = 0
 matchcount = 0
+keylength = 0
 
-s1_counts = np.zeros((4, 4))
-s2_counts = np.zeros((4, 4))
-store2 = {'01': 0, '21': 1, '23': 2, '03': 3}
-store1 = {'10': 0, '12': 1, '32': 2, '30': 3}
+a1b3 = [0] * 4
+a1b2 = [0] * 4
+a2b3 = [0] * 4
+a2b2 = [0] * 4
+
+counts = [a1b3, a1b2, a2b3, a2b2] 
+store = {'02': 0, '01': 1, '12': 2, '11': 3}
+s_values = []
 
 for _ in range(n):
-    a = random.randint(0, 3)
-    b = random.randint(0, 3)
-    ra = np.radians(alice_angles[a])
-    rb = np.radians(bob_angles[b])
+    a = random.randint(0, 2)
+    b = random.randint(0, 2)
+    ra = alice_angles[a]
+    rb = bob_angles[b]  
     r = random.random()
 
     p_cc = (np.cos(eta)*np.cos(ra)*np.cos(rb) + np.sin(eta)*np.sin(ra)*np.sin(rb))**2
@@ -55,22 +59,15 @@ for _ in range(n):
         if (alice_bit == bob_bit): keylength += 1
         
     else:
-        diff = np.radians(abs(ra - rb))
+        r = random.random()
+        
         i = str(a) + str(b)
-        if (i in store1):
-            s1_counts = update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, s1_counts, store1)
-        if (i in store2):
-            s2_counts = update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, s2_counts, store2)
+        if i in store:
+            counts = update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, counts, store)
 
+s = calc_sval(counts)
 
-s1 = calc_sval(s1_counts)
-s2 = calc_sval(s2_counts)
-
-print(f'S_1 = {s1}')
-output(s1_counts)
-print('------------------')
-print(f'S_2 = {s2}')
-output(s2_counts)
-print('------------------')
-print(f'Asymptotic key rate = {matchcount/n}') 
+print(f'\nS Value = {s}')
+output(counts)
+print(f'Asymptotic key rate = {matchcount/n}')
 print(f'True key rate = {keylength/n}')

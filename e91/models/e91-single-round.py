@@ -1,10 +1,13 @@
 import numpy as np 
 import random
 
+n = 10000
+
 alice_angles = [0.0, 45.0, 22.5]
 bob_angles = [0.0, -22.5, 22.5]
 
 key = ''
+keylength = 0
 a1b3 = [0] * 4
 a1b2 = [0] * 4
 a2b3 = [0] * 4
@@ -25,13 +28,14 @@ def calc_probabilities(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr):
         arr[store[i]][3] += 1
     return arr
 
-for _ in range(10000):
+for _ in range(n):
     a = random.randint(0, 2)
     b = random.randint(0, 2)
     ra = alice_angles[a]
     rb = bob_angles[b]  
 
     if ra == rb:
+        keylength += 1
         key += str(np.round(random.random(), 0))[0]
     else:
         diff = np.radians(abs(ra - rb))
@@ -80,4 +84,4 @@ print(f'P(ncnc) = {counts[3][3]}')
 
 print(f'\nS Value = {s}')
 
-print(f'\nKey = {key}')
+print(f'Key rate = {keylength/n}')
