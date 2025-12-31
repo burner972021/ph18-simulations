@@ -1,21 +1,12 @@
-# ph18-simulations
+# Finite-Key Security Proofs and Key Rate Analysis of Entanglement-Based Quantum Key Distribution with Alternate Measurement Bases
 
-Ekert-91 and various other protocols' simulations/data analysis/etc. For CenTaD PH18
+Ekert-91 and other variations of entanglement-based protocols' simulations/data analysis/etc.
 
-## Yet another QKD simulation in Python
+For HCI CenTaD PH18
 
-### 1. Research Scope
+## Abstract
 
-Project title: Analysing Key Rates For The Ekert-91 Protocol With Finite-sized Datasets And Varied Basis Choices, Through Noisy, Insecure Channels
-
-Most work done on current discrete-variable quantum key distribution variables assume datasets that approach infinity. However, that is not practical in real life settings. We would like to investigate the effects of a finite-sized dataset, as well as the effects of an eavesdropper on this data, We would like to find the acceptable range of measured Bell's inequality values calculated from finite data sets, and how they deviate from the assumed ideal values.
-
-## To do
-
-- add alternate basis simulations
-- add threshold tests
-- qiskit circuit simulation for collective attacks
-- add references
+Most existing analyses of entanglement-based quantum key distribution protocols are performed in the asymptotic limit of infinite key exchange, producing ideal Bell Inequality parameters. However, these ideal values are often not achievable in practical implementations with finite datasets. In this work, we present a finite-key analysis of entanglement-based quantum key distribution and derive acceptable thresholds for deviations of the observed CHSH Bell parameters from ideal asymptotic values. Using the Ekert-91(E91) protocol, we investigate the effects of channel noise and varied measurement basis choices through numerical simulations. We show that appropriate selections of measurement bases can provide greater security and improve achievable key rates, even with finite exchanges. These findings can provide practical guidance for the optimisation of entanglement-based systems under realistic conditions.
 
 ## Changelog
 
