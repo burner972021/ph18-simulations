@@ -1,6 +1,7 @@
 import numpy as np 
 import random
-from e91lib import calc_sval, output, update_counts
+import math
+from e91lib import calc_sval, output, update_counts, s_uncertainty, finite_key_rate
 
 n = 100000
 eta_degrees = 45        # default: 0 noise
@@ -65,9 +66,16 @@ for _ in range(n):
         if i in store:
             counts = update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, counts, store)
 
-s = calc_sval(counts)
+s = calc_sval(counts)      # computed S value
+s_delta = s_uncertainty(counts)     # statistical deviation of S value
+s_eff = s - s_delta     # effective S value
+qber = 1 - keylength/matchcount     # quantum bit error rate
+f_ec = 1.1      # error correction inefficiency factor (using cascade)
+key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
 print(f'\nS Value = {s}')
+print(f'Finite-key S uncertainty')
+print(f'Effective S value = {s_eff}')
 output(counts)
 print(f'Asymptotic key rate = {matchcount/n}')
 print(f'True key rate = {keylength/n}')

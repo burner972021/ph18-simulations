@@ -11,7 +11,9 @@
 \author{Cao Xizhen}
 \author{Kaylen Liew Tong En}
 \author{Leong Wei Chan}
+\author{Kwek Leong Chuan}
 \affiliation{Hwa Chong institution, 661 Bukit Timah Road Singapore}
+\affiliation{Centre for Quantum Technologies, National University of Singapore}
 
 \date{December 2025}
 
@@ -26,9 +28,12 @@
 
 \section{Introduction}
 
-Quantum Key Distribution(QKD) allows two distant parties, i.e. Alice and Bob, to create a shared secret key, even in the presence of a possible eavesdropper, i.e. Eve, who has the computational power to interfere with or intercept signal transmissions between Alice and Bob. The security of QKD is guaranteed by the fundamental laws of quantum mechanics, rather than assumptions in computational difficulty like in classical cryptography. 
+The advent of quantum computing has resulted in the emergence of Quantum Key Distribution (QKD), an encryption technique which generates a shared secret key between two distant parties (coined Alice and Bob), and is guaranteed to be secure by the laws of quantum physics.  Ekert-91 (E91) is one of the entanglement-based protocols that have developed since then. 
 
-There are broadly two families of QKD protocols, namely prepare-and-measure protocols and entanglement-based protocols. We will be focusing on the latter in this report.
+Entanglement arises when states of a composite system cannot be expressed as a product of the states of individual subsystems. The Clauser-Horne-Shimony-Holt (CHSH) inequality is used for experimental verification for E91, and is violated by entangled states, with the maximum violation predicted by quantum mechanics being the Tsierelson’s bound: $2\sqrt{2}$.
+
+In the Ekert-91 (hereon referred to as the E91) protocol, fully entangled states are distributed to both Alice and Bob(i.e. Each party receives one qubit from the shared pair). They have a pool of measurement bases(angles) to choose from; in the base case, there are 3 bases. E.g., Alice may choose from (0, 45, 22.5), while Bob can choose from (0, -22.5, 22.5). For every round, they independently, randomly select a measurement angle to use. If they selected the same angle, the measurement of this round can be used as a key bit as they are perfectly correlated(given an ideal scenario). Remaining, non-perfectly correlated measurement results can be used to compute Bell parameters, which can be shown to violate the CHSH inequality. 
+
 
 
 \subsection{Review of existing work}
@@ -47,9 +52,32 @@ There are broadly two families of QKD protocols, namely prepare-and-measure prot
 
 \subsection{Methodology}
 
+All random data/values generated with python are generated using Python’s random library, which is a fast pseudo-random number generator. 
+
+
 \subsection{Results}
 \subsubsection{Threshold for deviations}
 \subsubsection{Effects of different dataset sizes}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=7.5cm]{./images/svalue_against_rounds_with-bfl.png}
+    \caption{Scatter plot of S-values computed against dataset size(number of rounds, i.e. the number of entangled photon pairs sent to Alice and Bob).}
+    \label{fig:s-value1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=7.5cm]{./images/svalue_against_rounds_2.png}
+    \caption{FIG.1 stretched vertically to enable a clearer view of the best-fit line(green) of all the S values. (It ran a different simulation than LEFT, however.)}
+    \label{fig:s-value2}
+\end{figure}
+
+As the number of rounds per data point increases, the closer the computed S values are to the ideal value. In other words, the deviation of the computed S-value, even before introducing noise to the system, decreases as datasets increase in size. The implication of this is that security cannot be proven with small datasets.
+
+While most existing literature researching the E91 protocol assume infinite-sized datasets, or datasets which trend asymptotically, real-life exchanges are finite. The inevitable margin of error introduced with each exchange has real impacts on the security analysis of the E91 protocol.
+
+
 \subsubsection{Comparison of security, key rate, and resource management for variable measurement bases}
 \subsubsection{How eavesdroppers can practically leak information}
 
