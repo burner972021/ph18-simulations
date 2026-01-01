@@ -1,12 +1,12 @@
 import numpy as np
 import random
-from e91lib import calc_sval, output, update_counts
+from e91lib import calc_sval, output, update_counts, s_uncertainty, finite_key_rate, i_eve
 
 n = 100000
 eta_degrees = 45        # default: 0 noise
 eta = np.radians(eta_degrees)
-alice_error = 0         # alice's detector error rate
-bob_error = 0       # bob detector error rate
+alice_error = 0.05         # alice's detector error rate
+bob_error = 0.05       # bob detector error rate
 
 alice_angles = [-22.5, 0.0, 22.5, 45.0, 67.5, 90.0]
 bob_angles = [-22.5, 0.0, 22.5, 45.0, 67.5, 90.0]
@@ -76,18 +76,24 @@ s1 = calc_sval(s1_counts)
 s2 = calc_sval(s2_counts)
 s3 = calc_sval(s3_counts)
 s4 = calc_sval(s4_counts)
+s = (s1 + s2 + s3 + s4)/4    # take average s
 
-print(f'S_1 = {s1}')
-output(s1_counts)
-print('------------------')
-print(f'S_2 = {s2}')
-output(s2_counts)
-print('------------------')
-print(f'S_3 = {s3}')
-output(s3_counts)
-print('------------------')
-print(f'S_3 = {s4}')
-output(s4_counts)
-print('------------------')
-print(f'Asymptotic key rate = {matchcount/n}') 
-print(f'True key rate = {keylength/n}')
+s_delta = (s_uncertainty(s1_counts) + s_uncertainty(s2_counts) + s_uncertainty(s3_counts) + s_uncertainty(s4_counts))/4    # statistical deviation of S values
+s_eff = s - s_delta     # effective S value
+qber = 1 - keylength/matchcount     # quantum bit error rate
+f_ec = 1.05      # error correction inefficiency factor (using cascade)
+leaked = i_eve(s_eff)
+key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
+
+print(f'Number of rounds = {n}')
+print(f'S Value 1 = {s1}')
+print(f'S Value 2 = {s2}')
+print(f'S Value 3 = {s3}')
+print(f'S value 4 = {s4}')
+print(f'Average S value = {s}')
+print(f'Finite-key S uncertainty = {s_delta}')
+print(f'Maximum Holevo information leaked to Eve = {leaked}')
+print(f'Effective S value = {s_eff}')
+print(f'Asymptotic key rate = {matchcount/n}')
+print(f'key rate with probabilistic faulty detectors = {keylength/n}')
+print(f'True finite secret key rate (per signal) = {key_rate}')

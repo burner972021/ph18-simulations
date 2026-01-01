@@ -61,7 +61,7 @@ def binary_entropy(x):
         return 0.0
     return -x*np.log2(x) - (1-x)*np.log2(1-x)
 
-def i_eve(s_eff):
+def i_eve(s_eff):   # holevo quantity between eve and bob; essentially fraction of key information leaked to eve
     if s_eff <= 2:
         return 1.0   # classical S value
     C = np.sqrt((s_eff/2)**2 - 1)
