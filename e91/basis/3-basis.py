@@ -1,6 +1,5 @@
 import numpy as np 
 import random
-import math
 from e91lib import calc_sval, output, update_counts, s_uncertainty, finite_key_rate, i_eve
 
 n = 100000
