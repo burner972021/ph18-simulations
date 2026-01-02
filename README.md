@@ -8,6 +8,11 @@ For HCI CenTaD PH18
 
 Most existing analyses of entanglement-based quantum key distribution protocols are performed in the asymptotic limit of infinite key exchange, producing ideal Bell Inequality parameters. However, these ideal values are often not achievable in practical implementations with finite datasets. In this work, we present a finite-key analysis of entanglement-based quantum key distribution and derive acceptable thresholds for deviations of the observed CHSH Bell parameters from ideal asymptotic values. Using the Ekert-91(E91) protocol, we investigate the effects of channel noise and varied measurement basis choices through numerical simulations. We show that appropriate selections of measurement bases can provide greater security and improve achievable key rates, even with finite exchanges. These findings can provide practical guidance for the optimisation of entanglement-based systems under realistic conditions.
 
+## To do
+
+[IMPT] fix module import paths for e91lib.
+- declutter and clean up project files
+
 ## Changelog
 
 tbd

@@ -2,9 +2,9 @@
 
 Language: python
 
-External dependencies: numpy, random
+External dependencies: numpy, random, matplotlib
 
-There is also a library `e91lib.py`, which contains some helper functions I wrote for the simulations. 
+There is also a 'library'(ahem) `e91lib.py`, which contains some helper functions I wrote for the simulations. 
 
 ## Content
 
