@@ -3,6 +3,18 @@ import numpy as np
 # functions can be used to calculate Bell parameters, expectation values, S-values (for CHSH).
 # 31 Dec 2025 updatw: added functions to calculate statistical uncertainty of S, binary entropy, and Eve's information rate.
 
+def outcome(r, p_cc, p_cnc, p_ncc):
+    if r < p_cc:
+        return 1, 1
+    elif r < p_cc + p_cnc:
+        return 1, 0
+    elif r < p_cc + p_cnc + p_ncc:
+        return 0, 1
+    else:
+        return 0, 0
+    
+def rand_outcome():
+    return np.random.default_rng(), np.random.default_rng()
 
 def update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr, store):
     if r < p_cc:
@@ -21,31 +33,6 @@ def calc_sval(counts):
     e23 = (counts[2][0]+counts[2][3]-counts[2][1]-counts[2][2])/(counts[2][0]+counts[2][3]+counts[2][1]+counts[2][2])
     e22 = (counts[3][0]+counts[3][3]-counts[3][1]-counts[3][2])/(counts[3][0]+counts[3][3]+counts[3][1]+counts[3][2])
     return e13 + e12 + e23 - e22
-
-def output(counts):
-    print('a1b3:')
-    print(f'P(cc) = {counts[0][0]}')
-    print(f'P(cnc) = {counts[0][1]}')
-    print(f'P(ncc) = {counts[0][2]}')
-    print(f'P(ncnc) = {counts[0][3]}')
-
-    print('a1b2:')
-    print(f'P(cc) = {counts[1][0]}')
-    print(f'P(cnc) = {counts[1][1]}')
-    print(f'P(ncc) = {counts[1][2]}')
-    print(f'P(ncnc) = {counts[1][3]}')
-
-    print('a2b3:')
-    print(f'P(cc) = {counts[2][0]}')
-    print(f'P(cnc) = {counts[2][1]}')
-    print(f'P(ncc) = {counts[2][2]}')
-    print(f'P(ncnc) = {counts[2][3]}')
-
-    print('a2b2:')
-    print(f'P(cc) = {counts[3][0]}')
-    print(f'P(cnc) = {counts[3][1]}')
-    print(f'P(ncc) = {counts[3][2]}')
-    print(f'P(ncnc) = {counts[3][3]}')
 
 def s_uncertainty(counts, eps=1e-10):
     delta = 0

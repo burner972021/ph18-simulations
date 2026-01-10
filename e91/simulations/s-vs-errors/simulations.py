@@ -72,10 +72,7 @@ def three(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     s_delta = s_uncertainty(counts)
     s_eff = s - s_delta
 
-    qber = 1 - keylength / matchcount
-    key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
-
-    return i_eve(s_eff)
+    return s, s_eff
 
 def four(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
@@ -141,10 +138,8 @@ def four(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     s_delta = (s_uncertainty(s1_counts) + s_uncertainty(s2_counts)) / 2
     s_eff = s - s_delta
 
-    qber = 1 - keylength / matchcount
-    key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
+    return s, s_eff
 
-    return i_eve(s_eff)
 
 def five(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
@@ -219,10 +214,8 @@ def five(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     ) / 3
 
     s_eff = s - s_delta
-    qber = 1 - keylength / matchcount
-    key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
+    return s, s_eff
 
-    return i_eve(s_eff)
 
 def six(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
@@ -304,7 +297,4 @@ def six(alice_error, bob_error, n, eta_degrees=45, f_ec=1.05):
     ) / 4
 
     s_eff = s - s_delta
-    qber = 1 - keylength / matchcount
-    key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
-
-    return i_eve(s_eff)
+    return s, s_eff

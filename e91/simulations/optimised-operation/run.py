@@ -1,32 +1,40 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from simulations import three, four, five, six
+from e91lib import finite_key_rate
 
-n = 30000
-error = 0.03
+block_sizes = np.logspace(3, 5, 3, dtype=int) 
+detector_errors = np.linspace(0.0, 0.20, 10) 
+# eta_degrees = 45  
+f_ec = 1.05 
 
-etas = np.linspace(0.0, 90.0, 20)
-results3 = []
-results4 = []
-results5 = []
-results6 = []
+bases = [three, four, five, six]
+titles = ['3 angles', '4 angles', '5 angles', '6 angles']
+heatmaps = []
 
-for eta in etas:
-    results3.append(three(error, error, n, eta_degrees=eta))
-    results4.append(four(error, error, n, eta_degrees=eta))
-    results5.append(five(error, error, n, eta_degrees=eta))
-    results6.append(six(error, error, n, eta_degrees=eta))
+for func in bases:
+    KR = np.zeros((len(detector_errors), len(block_sizes)))  # rows=y, cols=x
+    for i, e in enumerate(detector_errors):
+        for j, n in enumerate(block_sizes):
+            KR[i, j] = func(e, e, n)
+    heatmaps.append(KR)
 
-plt.figure(figsize=(5, 3.75))
+fig, axs = plt.subplots(2, 2, figsize=(9, 6))
+axs = axs.flatten()
 
-plt.plot(etas, results3, marker='x', markersize=4, color='darkorange', label="3 angles")
-plt.plot(etas, results4, marker='o', markersize=4, color='khaki', label="4 angles")
-plt.plot(etas, results5, marker='^', markersize=4, color='forestgreen', label="5 angles")
-plt.plot(etas, results6, marker='P', markersize=4, color='royalblue', label="6 angles")
+for ax, KR, title in zip(axs, heatmaps, titles):
+    im = ax.imshow(KR, origin='lower', aspect='auto',
+                   extent=[block_sizes[0], block_sizes[-1], detector_errors[0], detector_errors[-1]],
+                   cmap='viridis')
+    ax.set_title(title)
+    ax.set_xlabel("L (block size)")
+    ax.set_ylabel("symmetric detector error rate")
 
-plt.xlabel(r'$\eta$')
-plt.ylabel('Eve Holevo information')
-plt.grid(True, which="both", ls="--", alpha=0.5)
-plt.legend()
+    barely_secure = KR < 1e-3
+    y_idx, x_idx = np.where(barely_secure)
+    ax.scatter(block_sizes[x_idx], detector_errors[y_idx], color='red', marker='x', label='Barely secure')
+
+cbar = fig.colorbar(im, ax=axs, orientation='vertical', fraction=0.03, pad=0.1)
+cbar.set_label("Secret Key Rate")
 plt.tight_layout()
 plt.show()

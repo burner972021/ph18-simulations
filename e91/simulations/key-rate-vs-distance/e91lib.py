@@ -3,8 +3,20 @@ import numpy as np
 # functions can be used to calculate Bell parameters, expectation values, S-values (for CHSH).
 # 31 Dec 2025 updatw: added functions to calculate statistical uncertainty of S, binary entropy, and Eve's information rate.
 
+def outcome(r, p_cc, p_cnc, p_ncc):
+    if r < p_cc:
+        return 1, 1
+    elif r < p_cc + p_cnc:
+        return 1, 0
+    elif r < p_cc + p_cnc + p_ncc:
+        return 0, 1
+    else:
+        return 0, 0
+    
+def rand_outcome():
+    return np.random.default_rng().integers(0, 2), np.random.default_rng().integers(0, 2)
 
-def update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr, store):
+def update_counts(r, i, p_cc, p_cnc, p_ncc, arr, store):
     if r < p_cc:
         arr[store[i]][0] += 1
     elif r < p_cc + p_cnc:
@@ -21,7 +33,6 @@ def calc_sval(counts):
     e23 = (counts[2][0]+counts[2][3]-counts[2][1]-counts[2][2])/(counts[2][0]+counts[2][3]+counts[2][1]+counts[2][2])
     e22 = (counts[3][0]+counts[3][3]-counts[3][1]-counts[3][2])/(counts[3][0]+counts[3][3]+counts[3][1]+counts[3][2])
     return e13 + e12 + e23 - e22
-
 
 def s_uncertainty(counts, eps=1e-10):
     delta = 0
