@@ -12,9 +12,11 @@ def outcome(r, p_cc, p_cnc, p_ncc):
         return 0, 1
     else:
         return 0, 0
+    
+def rand_outcome():
+    return np.random.default_rng().integers(0, 2), np.random.default_rng().integers(0, 2)
 
-
-def update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr, store):
+def update_counts(r, i, p_cc, p_cnc, p_ncc, arr, store):
     if r < p_cc:
         arr[store[i]][0] += 1
     elif r < p_cc + p_cnc:

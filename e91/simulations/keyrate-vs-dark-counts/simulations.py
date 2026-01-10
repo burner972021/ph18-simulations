@@ -3,7 +3,7 @@ from e91lib import outcome, rand_outcome, calc_sval, update_counts, s_uncertaint
 
 rng = np.random.default_rng()
 
-def three(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
+def three(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
     c_eta = np.cos(eta)
     s_eta = np.sin(eta)
@@ -39,7 +39,10 @@ def three(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-            if a_from_photon and b_from_photon: alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
+            if a_from_photon and b_from_photon: 
+                alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
+                if rng.random() < p_flip: alice_bit ^= 1
+                if rng.random() < p_flip: bob_bit ^= 1
             else: alice_bit, bob_bit = rand_outcome()
             if alice_bit == bob_bit: keylength += 1
 
@@ -62,7 +65,7 @@ def three(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
     return key_rate
 
 
-def four(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
+def four(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
     c_eta = np.cos(eta)
     s_eta = np.sin(eta)
@@ -101,14 +104,12 @@ def four(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-
-            if a_from_photon and b_from_photon:
+            if a_from_photon and b_from_photon: 
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-            else:
-                alice_bit, bob_bit = rand_outcome()
-
-            if alice_bit == bob_bit:
-                keylength += 1
+                if rng.random() < p_flip: alice_bit ^= 1
+                if rng.random() < p_flip: bob_bit ^= 1
+            else: alice_bit, bob_bit = rand_outcome()
+            if alice_bit == bob_bit: keylength += 1
 
         else:
             if not (a_click and b_click):
@@ -130,16 +131,15 @@ def four(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
     if matchcount == 0:
         return 0.0
 
-    s = calc_sval(s1_counts) + calc_sval(s2_counts)
-    s_eff = s - ((s_uncertainty(s1_counts) + s_uncertainty(s2_counts))/2)
+    s = (calc_sval(s1_counts) + calc_sval(s2_counts))/2
+    s_eff = s - (s_uncertainty(s1_counts) + s_uncertainty(s2_counts))/2
     qber = 1 - keylength / matchcount if matchcount > 0 else np.nan
-    leaked = i_eve(s_eff)
     key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
     return key_rate
 
 
-def five(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
+def five(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
     c_eta = np.cos(eta)
     s_eta = np.sin(eta)
@@ -180,14 +180,12 @@ def five(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-
-            if a_from_photon and b_from_photon:
+            if a_from_photon and b_from_photon: 
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-            else:
-                alice_bit, bob_bit = rand_outcome()
-
-            if alice_bit == bob_bit:
-                keylength += 1
+                if rng.random() < p_flip: alice_bit ^= 1
+                if rng.random() < p_flip: bob_bit ^= 1
+            else: alice_bit, bob_bit = rand_outcome()
+            if alice_bit == bob_bit: keylength += 1
 
         else:
             if not (a_click and b_click):
@@ -218,13 +216,12 @@ def five(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
     s = (calc_sval(s1_counts) + calc_sval(s2_counts) + calc_sval(s3_counts))/3
     s_eff = s - ((s_uncertainty(s1_counts) + s_uncertainty(s2_counts) + s_uncertainty(s3_counts))/3)
     qber = 1 - keylength / matchcount if matchcount > 0 else np.nan
-    leaked = i_eve(s_eff)
     key_rate = finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
     return key_rate
 
 
-def six(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
+def six(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05):
     eta = np.radians(eta_degrees)
     c_eta = np.cos(eta)
     s_eta = np.sin(eta)
@@ -267,14 +264,12 @@ def six(n, p_dark, det_eff, eta_channel=0.7, eta_degrees=45, f_ec=1.05):
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-
-            if a_from_photon and b_from_photon:
+            if a_from_photon and b_from_photon: 
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-            else:
-                alice_bit, bob_bit = rand_outcome()
-
-            if alice_bit == bob_bit:
-                keylength += 1
+                if rng.random() < p_flip: alice_bit ^= 1
+                if rng.random() < p_flip: bob_bit ^= 1
+            else: alice_bit, bob_bit = rand_outcome()
+            if alice_bit == bob_bit: keylength += 1
 
         else:
             if not (a_click and b_click):

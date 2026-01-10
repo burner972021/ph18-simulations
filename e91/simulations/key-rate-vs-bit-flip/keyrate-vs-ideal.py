@@ -27,12 +27,21 @@ plt.plot(p_flips, results6, marker='P', markersize=4, color='royalblue', label="
 
 # plt.xlim(0.0, 0.15)
 # plt.ylim(0.0, 0.20)
-plt.xticks(np.arange(0.0, 0.151, 0.05))
-plt.yticks(np.arange(0.0, 0.151, 0.05))
+# plt.xticks(np.arange(0.0, 0.151, 0.05))
+# plt.yticks(np.arange(0.0, 0.151, 0.05))
+
+three_ideal = 2/9
+four_ideal = 1/4
+five_ideal = 1/5
+six_ideal = 1/6
 
 plt.xlabel(r'bit flip error rate ($p_{flip}$)')
 plt.ylabel('secret key rate (bits/signal)')
-plt.grid(True, which="both", ls="--", alpha=0.5)
+plt.axhline(three_ideal, ls='--', color='darkorange', alpha=0.65)
+plt.axhline(four_ideal, ls='--', color='khaki', alpha=0.85)
+plt.axhline(five_ideal, ls='--', color='forestgreen', alpha=0.65)
+plt.axhline(six_ideal, ls='--', color='royalblue', alpha=0.65)
+plt.grid(True, which="both", ls="--", alpha=0.65)
 plt.legend()
 plt.tight_layout()
 plt.show()

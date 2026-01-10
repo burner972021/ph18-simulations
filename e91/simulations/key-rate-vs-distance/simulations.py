@@ -15,7 +15,7 @@ def three_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_deg
     s_eta = np.sin(eta)
 
     alice_angles = np.radians(np.array([0.0, 45.0, 22.5]))
-    bob_angles   = np.radians(np.array([0.0, -22.5, 22.5]))
+    bob_angles = np.radians(np.array([0.0, -22.5, 22.5]))
 
     matchcount = 0
     keylength = 0
@@ -31,9 +31,9 @@ def three_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_deg
         rb = bob_angles[b]
         r = rng.random()
 
-        p_cc   = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
-        p_cnc  = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb))**2
-        p_ncc  = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb))**2
+        p_cc = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
+        p_cnc = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb))**2
+        p_ncc = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb))**2
 
         photon_a = rng.random() < eta_channel
         photon_b = rng.random() < eta_channel
@@ -66,8 +66,7 @@ def three_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_deg
     return finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
 
-def four_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
-                  eta_degrees=45, f_ec=1.05, source_in_middle=True):
+def four_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_degrees=45, f_ec=1.05, source_in_middle=True):
     eta_channel = fiber_eta(distance_km, alpha_db_per_km, source_in_middle)
 
     eta = np.radians(eta_degrees)
@@ -75,7 +74,7 @@ def four_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
     s_eta = np.sin(eta)
 
     alice_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0]))
-    bob_angles   = np.radians(np.array([-22.5, 0.0, 22.5, 45.0]))
+    bob_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0]))
 
     matchcount = 0
     keylength = 0
@@ -93,7 +92,7 @@ def four_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
         rb = bob_angles[b]
         r = rng.random()
 
-        p_cc  = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
+        p_cc = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
         p_cnc = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb))**2
         p_ncc = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb))**2
 
@@ -120,15 +119,14 @@ def four_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
     if matchcount == 0:
         return 0.0
 
-    s = calc_sval(s1_counts) + calc_sval(s2_counts)
+    s = (calc_sval(s1_counts) + calc_sval(s2_counts))/2
     s_eff = s - ((s_uncertainty(s1_counts) + s_uncertainty(s2_counts)) / 2.0)
     qber = 1 - keylength / matchcount
 
     return finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
 
-def five_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
-                  eta_degrees=45, f_ec=1.05, source_in_middle=True):
+def five_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_degrees=45, f_ec=1.05, source_in_middle=True):
     eta_channel = fiber_eta(distance_km, alpha_db_per_km, source_in_middle)
 
     eta = np.radians(eta_degrees)
@@ -136,7 +134,7 @@ def five_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
     s_eta = np.sin(eta)
 
     alice_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5]))
-    bob_angles   = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5]))
+    bob_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5]))
 
     matchcount = 0
     keylength = 0
@@ -156,7 +154,7 @@ def five_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
         rb = bob_angles[b]
         r = rng.random()
 
-        p_cc  = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
+        p_cc = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
         p_cnc = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb))**2
         p_ncc = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb))**2
 
@@ -191,8 +189,7 @@ def five_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
     return finite_key_rate(matchcount, n, s_eff, f_ec, qber)
 
 
-def six_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
-                 eta_degrees=45, f_ec=1.05, source_in_middle=True):
+def six_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2, eta_degrees=45, f_ec=1.05, source_in_middle=True):
     eta_channel = fiber_eta(distance_km, alpha_db_per_km, source_in_middle)
 
     eta = np.radians(eta_degrees)
@@ -200,7 +197,7 @@ def six_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
     s_eta = np.sin(eta)
 
     alice_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5, 90.0]))
-    bob_angles   = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5, 90.0]))
+    bob_angles = np.radians(np.array([-22.5, 0.0, 22.5, 45.0, 67.5, 90.0]))
 
     matchcount = 0
     keylength = 0
@@ -222,7 +219,7 @@ def six_distance(n, p_flip, det_eff, distance_km, alpha_db_per_km=0.2,
         rb = bob_angles[b]
         r = rng.random()
 
-        p_cc  = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
+        p_cc = (c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb))**2
         p_cnc = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb))**2
         p_ncc = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb))**2
 
