@@ -1,0 +1,36 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from simulations import three, four, five, six
+
+n = 100000
+
+errors = np.linspace(0.0, 0.15, 10)
+results3 = []
+results4 = []
+results5 = []
+results6 = []
+
+for error in errors:
+    results3.append(three(error, n))
+    results4.append(four(error, n))
+    results5.append(five(error, n))
+    results6.append(six(error, n))
+
+plt.figure(figsize=(5, 3.75))
+
+plt.plot(errors, results3, marker='x', markersize=4, color='darkorange', label="3 angles")
+plt.plot(errors, results4, marker='o', markersize=4, color='khaki', label="4 angles")
+plt.plot(errors, results5, marker='^', markersize=4, color='forestgreen', label="5 angles")
+plt.plot(errors, results6, marker='P', markersize=4, color='royalblue', label="6 angles")
+
+# plt.xlim(0.0, 0.15)
+# plt.ylim(0.0, 0.20)
+plt.xticks(np.arange(0.0, 0.151, 0.05))
+plt.yticks(np.arange(0.0, 0.201, 0.05))
+
+plt.xlabel('bit flip error rate')
+plt.ylabel('secret key rate (bits/signal)')
+plt.grid(True, which="both", ls="--", alpha=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
