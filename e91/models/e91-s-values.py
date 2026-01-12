@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 
-runs = 150
+runs = 100
 
 round_list = [int(1000 * (10 ** (i / (runs/3)))) for i in range(runs)]
 
@@ -59,16 +59,12 @@ for rounds in round_list:
 x = np.array(round_list)
 y = np.array(s_values)
 
-plt.figure(figsize=(5, 3.5))
+plt.figure(figsize=(5, 3.75))
 plt.scatter(x, y, s=10)
 
 ideal = 2*np.sqrt(2)
 
 plt.ylim(2.7, 3.0)
-
-# ticks = [2.0, 2.5, ideal, 3.0, 3.5]
-# labels = ["2.0", "2.5", f"{ideal:.3f}", "3.0", "3.5"]
-# plt.yticks(ticks, labels)
 
 coeffs = np.polyfit(np.log(x), y, 1)
 fit = coeffs[0] * np.log(x) + coeffs[1]
@@ -79,6 +75,5 @@ plt.axhline(ideal, color='r')
 plt.xlabel("Number of rounds")
 plt.ylabel("S-value")
 plt.title("S-value vs number of rounds")
-
 plt.tight_layout()
 plt.show()

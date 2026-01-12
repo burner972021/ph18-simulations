@@ -9,7 +9,7 @@ def three(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05
     s_eta = np.sin(eta)
 
     alice_angles = np.radians(np.array([0.0, 45.0, 22.5]))
-    bob_angles   = np.radians(np.array([0.0, -22.5, 22.5]))
+    bob_angles = np.radians(np.array([0.0, -22.5, 22.5]))
 
     matchcount = 0
     keylength = 0

@@ -22,6 +22,7 @@ plt.plot(distances, results4, marker='o', markersize=4, color='khaki', label="4 
 plt.plot(distances, results5, marker='^', markersize=4, color='forestgreen', label="5 angles")
 plt.plot(distances, results6, marker='P', markersize=4, color='royalblue', label="6 angles")
 
+plt.ylim(1e-6, 1e-1)
 plt.yscale("log")
 plt.xlabel("distance (km)")
 plt.ylabel("secret key rate (bits/signal)")

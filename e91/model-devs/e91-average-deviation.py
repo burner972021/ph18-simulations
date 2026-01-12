@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-runs_per_round_size = 30         
+runs_per_round_size = 1     
 round_sizes = np.logspace(3, 6, 20).astype(int)   
 
 alice_angles = [0.0, 45.0, 22.5]
@@ -56,12 +56,12 @@ for N in round_sizes:
     avg_devs.append(deviation)
     print(f"N={N}  avg S={avg_S:.4f}  deviation={deviation:.4f}")
 
-plt.figure(figsize=(8,5))
-plt.loglog(round_sizes, avg_devs, marker='o')
-
+plt.figure(figsize=(5, 3.75))
+plt.plot(round_sizes, avg_devs, marker='o')
+plt.xscale("log")
 plt.xlabel("Number of rounds (dataset size)")
 plt.ylabel("Average |S - ideal|")
 plt.title("Convergence of CHSH S-value to ideal (2√2)")
 plt.grid(True, which="both", ls="--")
-
+plt.tight_layout()
 plt.show()
