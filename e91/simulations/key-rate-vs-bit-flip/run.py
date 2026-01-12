@@ -2,16 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simulations import three, four, five, six
 
-# --- params ---
 n = 100000
 p_dark = 0.0
 det_eff = 0.9
 p_flips = np.linspace(0.0, 0.15, 10)
 
-num_trials = 5
+trials = 5
 use_sem = True  
 
-def run(func, p_flip_values, trials=5):
+def run(func, p_flip_values, trials):
     means, errs = [], []
     for p in p_flip_values:
         vals = np.array([func(n, p_dark, det_eff, p) for _ in range(trials)], dtype=float)
@@ -22,10 +21,10 @@ def run(func, p_flip_values, trials=5):
             errs.append(vals.std(ddof=1))
     return np.array(means), np.array(errs)
 
-m3, e3 = run(three, p_flips, num_trials)
-m4, e4 = run(four,  p_flips, num_trials)
-m5, e5 = run(five,  p_flips, num_trials)
-m6, e6 = run(six,   p_flips, num_trials)
+m3, e3 = run(three, p_flips, trials)
+m4, e4 = run(four, p_flips, trials)
+m5, e5 = run(five, p_flips, trials)
+m6, e6 = run(six, p_flips, trials)
 
 plt.figure(figsize=(5, 3.75))
 
