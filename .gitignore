@@ -4,3 +4,4 @@ report
 __init__.py
 *.png
 *.svg
+*.npz
