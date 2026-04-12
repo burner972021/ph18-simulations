@@ -2,12 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simulations import three, four, five, six
 
+plt.rcParams['pdf.fonttype'] = 42  # TrueType fonts
+plt.rcParams['ps.fonttype'] = 42
+
 n = 100000
 p_dark = 0.0
 det_eff = 0.9
 p_flips = np.linspace(0.0, 0.15, 10)
 
-trials = 5
+trials = 1
 use_sem = True  
 
 def run(func, p_flip_values, trials):
@@ -41,3 +44,5 @@ plt.grid(True, which="both", ls="--", alpha=0.5)
 plt.legend()
 plt.tight_layout()
 plt.show()
+# plt.savefig('../../results/keyrate-vs-bit-flip.png')
+# plt.savefig('../../results/keyrate-vs-bit-flip.pdf')

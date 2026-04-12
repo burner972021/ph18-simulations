@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simulations import three, four, five, six
 
+plt.rcParams['pdf.fonttype'] = 42  # TrueType fonts
+plt.rcParams['ps.fonttype'] = 42
+
 p_flip = 0.03
 p_dark = 0.03
 det_eff = 0.9

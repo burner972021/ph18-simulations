@@ -1,4 +1,5 @@
 import numpy as np
+rng = np.random.default_rng()
 # library of helper functions for PH18 Ekert-91 simulations.
 # functions can be used to calculate Bell parameters, expectation values, S-values (for CHSH).
 # 31 Dec 2025 updatw: added functions to calculate statistical uncertainty of S, binary entropy, and Eve's information rate.
@@ -14,9 +15,39 @@ def outcome(r, p_cc, p_cnc, p_ncc):
         return 0, 0
     
 def rand_outcome():
-    return np.random.default_rng(), np.random.default_rng()
+    return np.random.default_rng().integers(0, 2), np.random.default_rng().integers(0, 2)
 
-def update_counts(r, i, p_cc, p_cnc, p_ncc, p_ncnc, arr, store):
+def flipped(ra, rb, c_eta, s_eta, p_flip):
+    flip_a = rng.random() < p_flip
+    flip_b = rng.random() < p_flip
+
+    # noNo flip  c|00> + s|11>
+    if not flip_a and not flip_b:
+        p_cc = ( c_eta*np.cos(ra)*np.cos(rb) + s_eta*np.sin(ra)*np.sin(rb) )**2
+        p_cnc = (-c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb) )**2
+        p_ncc = (-c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb) )**2
+
+    # Alice flip c|10> + s|01>
+    elif flip_a and not flip_b:
+        p_cc = ( c_eta*np.sin(ra)*np.cos(rb) + s_eta*np.cos(ra)*np.sin(rb) )**2
+        p_cnc = (-c_eta*np.sin(ra)*np.sin(rb) + s_eta*np.cos(ra)*np.cos(rb) )**2
+        p_ncc = ( c_eta*np.cos(ra)*np.cos(rb) - s_eta*np.sin(ra)*np.sin(rb) )**2
+
+    # bob flip c|01> + s|10>
+    elif not flip_a and flip_b:
+        p_cc = ( c_eta*np.cos(ra)*np.sin(rb) + s_eta*np.sin(ra)*np.cos(rb) )**2
+        p_cnc = ( c_eta*np.cos(ra)*np.cos(rb) - s_eta*np.sin(ra)*np.sin(rb) )**2
+        p_ncc = (-c_eta*np.sin(ra)*np.sin(rb) + s_eta*np.cos(ra)*np.cos(rb) )**2
+
+    # both flip c|11> + s|00>
+    else:
+        p_cc = ( c_eta*np.sin(ra)*np.sin(rb) + s_eta*np.cos(ra)*np.cos(rb) )**2
+        p_cnc = ( c_eta*np.sin(ra)*np.cos(rb) - s_eta*np.cos(ra)*np.sin(rb) )**2
+        p_ncc = ( c_eta*np.cos(ra)*np.sin(rb) - s_eta*np.sin(ra)*np.cos(rb) )**2
+
+    return p_cc, p_cnc, p_ncc
+
+def update_counts(r, i, p_cc, p_cnc, p_ncc, arr, store):
     if r < p_cc:
         arr[store[i]][0] += 1
     elif r < p_cc + p_cnc:

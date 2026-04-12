@@ -1,5 +1,5 @@
 import numpy as np 
-from e91lib import outcome, rand_outcome, calc_sval, update_counts, s_uncertainty, finite_key_rate, i_eve
+from e91lib import outcome, rand_outcome, flipped, calc_sval, update_counts, s_uncertainty, finite_key_rate, i_eve
 
 rng = np.random.default_rng()
 
@@ -39,10 +39,9 @@ def three(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-            if a_from_photon and b_from_photon: 
+            if a_from_photon and b_from_photon:
+                p_cc, p_cnc, p_ncc = flipped(ra, rb, c_eta, s_eta, p_flip)
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-                if rng.random() < p_flip: alice_bit ^= 1
-                if rng.random() < p_flip: bob_bit ^= 1
             else: alice_bit, bob_bit = rand_outcome()
             if alice_bit == bob_bit: keylength += 1
 
@@ -104,10 +103,9 @@ def four(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05)
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-            if a_from_photon and b_from_photon: 
+            if a_from_photon and b_from_photon:
+                p_cc, p_cnc, p_ncc = flipped(ra, rb, c_eta, s_eta, p_flip)
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-                if rng.random() < p_flip: alice_bit ^= 1
-                if rng.random() < p_flip: bob_bit ^= 1
             else: alice_bit, bob_bit = rand_outcome()
             if alice_bit == bob_bit: keylength += 1
 
@@ -180,10 +178,9 @@ def five(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05)
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-            if a_from_photon and b_from_photon: 
+            if a_from_photon and b_from_photon:
+                p_cc, p_cnc, p_ncc = flipped(ra, rb, c_eta, s_eta, p_flip)
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-                if rng.random() < p_flip: alice_bit ^= 1
-                if rng.random() < p_flip: bob_bit ^= 1
             else: alice_bit, bob_bit = rand_outcome()
             if alice_bit == bob_bit: keylength += 1
 
@@ -264,10 +261,9 @@ def six(n, p_dark, det_eff, p_flip, eta_channel=0.9, eta_degrees=45, f_ec=1.05):
 
         if ra == rb and a_click and b_click:
             matchcount += 1
-            if a_from_photon and b_from_photon: 
+            if a_from_photon and b_from_photon:
+                p_cc, p_cnc, p_ncc = flipped(ra, rb, c_eta, s_eta, p_flip)
                 alice_bit, bob_bit = outcome(r, p_cc, p_cnc, p_ncc)
-                if rng.random() < p_flip: alice_bit ^= 1
-                if rng.random() < p_flip: bob_bit ^= 1
             else: alice_bit, bob_bit = rand_outcome()
             if alice_bit == bob_bit: keylength += 1
 

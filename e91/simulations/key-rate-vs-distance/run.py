@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simulations import three_distance, four_distance, five_distance, six_distance
 
+plt.rcParams['pdf.fonttype'] = 42  # TrueType fonts
+plt.rcParams['ps.fonttype'] = 42
+
 n = 100000
 det_eff = 0.9
 p_flip = 0.05
