@@ -1,16 +1,11 @@
-# SECURE ME A KEY… AND DON’T SAY PROBABLY! Finite Key Analysis of Entanglement-Based Quantum Key Distribution with Alternate Measurement Bases
+# Optimising Bell Measurement Settings in Entanglement-Based Quantum Key Distribution Under Finite Key Conditions
 
-Ekert-91 and other variations of entanglement-based protocols' simulations/data analysis/etc.
+Ekert-91 and other variations of entanglement-based protocols' simulations/data
 
 ## Abstract
 
-Finite-key effects play a critical role in the practical security of entanglement-based quantum key distribution. In this work, we perform finite-key analyses on the Ekert-91 protocol with different Bell settings for measurement-basis choices. We systematically compare the performance of different measurement-basis configurations under realistic detector imperfections. Using Monte Carlo simulations, we evaluate secret key rates, quantum bit error rates, Bell-inequality violations, and bounds on Eve’s information for varying numbers of measurement bases. Our results show that while expanding the set of measurement bases does not improve asymptotic security limits, it can significantly tighten parameter estimation and enhance noise tolerance in finite-key implementations, at the expense of reduced key sifting efficiency. In this report, we provide a loose generalisation for finding parameters and conditions where performance of E91 protocol variants are optimised.
+Quantum Key Distribution (QKD) is a promising technology for enabling secure communications. While there is potential for increased performance of the Ekert-91 (E91) Quantum Key Distribution (QKD) protocol when measurement bases beyond the originally proposed set are chosen, much of the existing literature assumes fixed and minimal measurement-basis choices. In this work, we present a finite-key numerical simulation framework and performance analysis of the E91 protocol, systematically analysing the performance of different Bell test configurations given system imperfections. Using Monte Carlo methods, we evaluate lower bounds on the Secret Key Rate (SKR) and Bell Inequality violations for varying numbers of measurement bases. Our results show that under certain finite-key conditions, different measurement basis settings for the E91 Protocol can produce higher SKR. This highlights the importance of measurement basis designs for E91, or other entanglement-based QKD implementations for reliable quantum communication.
 
 ## To do
 
-[IMPT] fix module import paths for e91lib.
-
-## Acknowledgements
-
-## References
-
+- fix module import paths for e91lib.
